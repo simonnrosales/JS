@@ -6,7 +6,7 @@ const products = [
     name: "TinyJobs",
     price:  6500,
     image:
-      "https://www.solumex.com/wp-content/uploads/2013/11/dummy-image-square.jpg",
+      "assets/img/food/tinyjobs.png",
   },
   {
     id: 2,
@@ -31,34 +31,81 @@ const products = [
   },
 ];
 
-export const renderProducts = () => {
+const cart = []
+
+const getUsers = async ()=> {
+
+  const URL = "https://jsonplaceholder.org/users"
+
+  const response = await fetch(URL)
+
+  const data = await response.json()
+
+  return data
+
+}
+
+export const renderProducts = async () => {
   const productList = document.getElementById("productList");
 
+
+  const products =await  getUsers()
+
   products.forEach((product) => {
-    const productCard = document.createElement("article");
-    productCard.classList.add("product");
-    productCard.setAttribute("data-id", product.id);
+    const productCard = `
+                          <article class="product" ">
+                            <div>
+                                <img class="product__image" src="${product.image}" alt="${product.title}" />
+                              </div>
+                              <div>
+                                <h5 class="product__title">${product.firstname} ${product.lastname}</h5>
+                                <p class="product__price">$${product.price}</p>
+                              </div>
 
-    productCard.innerHTML = `
-      <div>
-        <img class="product__image" src="${product.image}" alt="${
-      product.title
-    }" />
-      </div>
-      <div>
-        <h5 class="product__title">${product.title}</h5>
-        <p class="product__price">$${product.price.toFixed(2)}</p>
-      </div>
-      <button class="product__add">Agregar</button>
-    `;
+                              <button class="product__add" data-id="${product.id}">Agregar</button>
+                          </article>
+                `;
 
-    /*  Opcion 1
-    productCard.addEventListener("click", () => {
-      console.log("hiciste clicck");
-    }); */
 
-    productList.append(productCard);
+
+
+    productList.innerHTML += productCard;
   });
+
+
+  const updateCartUi = ()=> {
+    /* const cartItems = document.getElementById("cart__items")
+
+    cart.forEach (
+      (item)=> {
+        cartItems.innerHTML += item
+      }
+    ) */
+
+
+  }
+
+  const addToCart = (event)=> {
+
+    const item = event.target;
+
+    const idItem = item.getAttribute("data-id")
+
+    console.log(idItem)
+
+    cart.push(item)
+
+    updateCartUi()
+
+  }
+
+  const productAddButtons = document.getElementsByClassName("product__add") 
+
+/*   for( let productAddButton of productAddButtons){
+    productAddButton.addEventListener("click", addToCart )
+
+  } */
+ 
 };
 
 export const updateCartUi = () => {

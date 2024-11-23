@@ -78,10 +78,11 @@ dl dd {
 }
 
 .product__title {
-  color: rgb(75, 75, 75);
+  color: red;
 }
 
 .product__price {
+  color: red;
   text-align: center;
   padding: 10px;
   font-weight: 600;
@@ -133,7 +134,7 @@ dl dd {
 }
 
 .cart__title {
-  color: #333;
+  color: red;
   font-size: 1.5rem;
   font-weight: bold;
 }
